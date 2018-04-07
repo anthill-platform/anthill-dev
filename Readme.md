@@ -1,8 +1,4 @@
 
-<div align="center">
-<img src="https://cloud.githubusercontent.com/assets/1666014/26267105/0169f088-3cf1-11e7-93e9-2d0d0169eacc.png" width="48">
-</div>
-
 # Hack In
 
 This branch is made for the purpose of development of the anthill itself.
@@ -15,8 +11,8 @@ To setup minimal development environment on Mac Os X, you will need:
 2. Clone this branch, including all submodules
 
 ```bash
-git clone -b dev https://github.com/anthill-platform/anthill.git
-cd anthill
+git clone -b dev https://github.com/anthill-platform/anthill-dev.git
+cd anthill-dev
 git submodule update --init --recursive
 ```
 3. Run installation script
