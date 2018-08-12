@@ -29,14 +29,7 @@ virtualenv /usr/local/venv/dev
 
 source /usr/local/venv/dev/bin/activate
 
-/usr/local/venv/dev/bin/pip install termcolor ipaddr ujson pyzmq redis tornado pycrypto mysql-python GitPython
-/usr/local/venv/dev/bin/pip install git+https://github.com/anthill-utils/tornado-redis.git
-/usr/local/venv/dev/bin/pip install git+https://github.com/anthill-utils/PyMySQL.git
-/usr/local/venv/dev/bin/pip install tormysql sphinx
-/usr/local/venv/dev/bin/pip install git+https://github.com/anthill-utils/pyjwt.git
-/usr/local/venv/dev/bin/pip install git+https://github.com/anthill-utils/pika.git
-/usr/local/venv/dev/bin/pip install pyOpenSSL cffi cryptography futures ipgetter expiringdict python-geoip
-/usr/local/venv/dev/bin/pip install python-geoip-geolite2-yplan psutil lazy
+/usr/local/venv/dev/bin/pip install -r ../../common/src/requirements.txt
 
 git clone https://github.com/anthill-utils/v8py.git
 cd v8py
