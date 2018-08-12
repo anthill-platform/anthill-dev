@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="96de6b2d-9791-4150-9b7a-80f30b795059" name="vm" url="http://vm.anthillplatform.org">
+        <fileTransfer host="vm.anthillplatform.org" port="22" rootFolder="/opt/anthill/vm" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
