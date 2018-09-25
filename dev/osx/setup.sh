@@ -15,6 +15,9 @@ brew install mysql
 brew install rabbitmq
 brew install redis
 
+brew install libssl
+brew install python3
+
 sudo mkdir /usr/local/anthill
 sudo chown -R $(id -u):$(id -g) /usr/local/anthill
 
@@ -23,18 +26,21 @@ sudo easy_install virtualenv
 sudo mkdir /usr/local/venv
 sudo chown -R $(id -u):$(id -g) /usr/local/venv
 
-virtualenv /usr/local/venv/dev
+virtualenv -p python3 /usr/local/venv/dev3
 
-# install packages into virtualenv at /usr/local/venv/dev
+source /usr/local/venv/dev3/bin/activate
 
-source /usr/local/venv/dev/bin/activate
+# we need latest setuptools
+pip3 install --upgrade pip
+pip3 install setuptools==40.0
 
-/usr/local/venv/dev/bin/pip install -r ../../common/src/requirements.txt
+# install packages into virtualenv at /usr/local/venv/dev3
+pip3 install -r ../../common/requirements.txt
 
 git clone https://github.com/anthill-utils/v8py.git
 cd v8py
-export MACOSX_DEPLOYMENT_TARGET=10.8
-CFLAGS='-Wall -O0 -g' /usr/local/venv/dev/bin/python setup.py install
+export MACOSX_DEPLOYMENT_TARGET=10.13
+CFLAGS='-Wall -O0 -g' /usr/local/venv/dev3/bin/python setup.py install
 cd ../
 
 # start mysql server

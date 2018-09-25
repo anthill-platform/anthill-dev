@@ -5,8 +5,26 @@
       <entry url="file://$PROJECT_DIR$">
         <entryData>
           <resourceRoots>
-            <path value="file://$PROJECT_DIR$/login" />
             <path value="file://$PROJECT_DIR$/admin" />
+            <path value="file://$PROJECT_DIR$/common" />
+            <path value="file://$PROJECT_DIR$/config" />
+            <path value="file://$PROJECT_DIR$/dev" />
+            <path value="file://$PROJECT_DIR$/discovery" />
+            <path value="file://$PROJECT_DIR$/dlc" />
+            <path value="file://$PROJECT_DIR$/environment" />
+            <path value="file://$PROJECT_DIR$/event" />
+            <path value="file://$PROJECT_DIR$/exec" />
+            <path value="file://$PROJECT_DIR$/game-controller" />
+            <path value="file://$PROJECT_DIR$/game-master" />
+            <path value="file://$PROJECT_DIR$/leaderboard" />
+            <path value="file://$PROJECT_DIR$/login" />
+            <path value="file://$PROJECT_DIR$/message" />
+            <path value="file://$PROJECT_DIR$/profile" />
+            <path value="file://$PROJECT_DIR$/promo" />
+            <path value="file://$PROJECT_DIR$/report" />
+            <path value="file://$PROJECT_DIR$/social" />
+            <path value="file://$PROJECT_DIR$/static" />
+            <path value="file://$PROJECT_DIR$/store" />
           </resourceRoots>
         </entryData>
       </entry>

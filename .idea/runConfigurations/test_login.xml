@@ -6,16 +6,16 @@
     <envs>
       <env name="PYTHONPATH" value="../common/src:src/tests:src" />
     </envs>
-    <option name="SDK_HOME" value="/usr/local/venv/dev/bin/python" />
+    <option name="SDK_HOME" value="" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/login" />
-    <option name="IS_MODULE_SDK" value="false" />
+    <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="_new_pattern" value="&quot;&quot;" />
-    <option name="_new_additionalArguments" value="&quot;discover&quot;" />
-    <option name="_new_target" value="&quot;&quot;" />
-    <option name="_new_targetType" value="&quot;CUSTOM&quot;" />
-    <method />
+    <option name="_new_additionalArguments" value="&quot;&quot;" />
+    <option name="_new_target" value="&quot;anthill.login.tests&quot;" />
+    <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    <method v="2" />
   </configuration>
 </component>
