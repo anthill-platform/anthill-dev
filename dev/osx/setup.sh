@@ -36,12 +36,7 @@ pip3 install setuptools==40.0
 
 # install packages into virtualenv at /usr/local/venv/dev3
 pip3 install -r ../../common/requirements.txt
-
-git clone https://github.com/anthill-utils/v8py.git
-cd v8py
-export MACOSX_DEPLOYMENT_TARGET=10.13
-CFLAGS='-Wall -O0 -g' /usr/local/venv/dev3/bin/python setup.py install
-cd ../
+pip3 install -r ../../exec/requirements.txt
 
 # start mysql server
 ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents

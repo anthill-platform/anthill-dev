@@ -1,31 +1,33 @@
+#!/usr/bin/env bash
+
 echo "Starting all anthill services..."
-source /usr/local/venv/dev/bin/activate
+source /usr/local/venv/dev3/bin/activate
 cd ../
 
 start_service () {
-    echo "Starting service $1"
-    cd ../$1
-    PYTHONPATH="../common/src" python src/server.py &
+    echo "Starting service $2"
+    cd "../$1"
+    PYTHONPATH="../common" python -m "$2" &
 }
 
-start_service "admin"
-start_service "config"
-start_service "discovery"
-start_service "dlc"
-start_service "environment"
-start_service "event"
-start_service "exec"
-start_service "game-controller"
-start_service "game-master"
-start_service "leaderboard"
-start_service "login"
-start_service "message"
-start_service "profile"
-start_service "promo"
-start_service "report"
-start_service "social"
-start_service "static"
-start_service "store"
+start_service "admin" "anthill.admin.server"
+start_service "config" "anthill.config.server"
+start_service "discovery" "anthill.discovery.server"
+start_service "dlc" "anthill.dlc.server"
+start_service "environment" "anthill.environment.server"
+start_service "event" "anthill.event.server"
+start_service "exec" "anthill.exec.server"
+start_service "game-controller" "anthill.game.controller.server"
+start_service "game-master" "anthill.game.master.server"
+start_service "leaderboard" "anthill.leaderboard.server"
+start_service "login" "anthill.login.server"
+start_service "message" "anthill.message.server"
+start_service "profile" "anthill.profile.server"
+start_service "promo" "anthill.promo.server"
+start_service "report" "anthill.report.server"
+start_service "social" "anthill.social.server"
+start_service "static" "anthill.static.server"
+start_service "store" "anthill.store.server"
 
 read -p "Press enter to stop."
 pkill -P $$
