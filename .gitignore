@@ -1,2 +1,4 @@
 .anthill-keys/
 .idea/workspace.xml
+/.idea/dataSources
+/.idea/httpRequests

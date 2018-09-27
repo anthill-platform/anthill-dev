@@ -24,11 +24,11 @@ call pip install --upgrade pip setuptools wheel
 
 echo installing anthill services...
 pushd ..\..\common
-call python setup.py install
+call python setup.py sdist
 popd
 
 pushd ..\..\exec
-call python setup.py install
+call python setup.py sdist
 popd
 
 echo starting services...
