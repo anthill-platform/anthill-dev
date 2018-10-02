@@ -6,8 +6,8 @@ call powershell.exe "iex (new-object net.webclient).downloadstring('https://get.
 echo installing scoop extras..
 call scoop bucket add extras
 
-echo installing python 3.5 and various services...
-call scoop install python-exp@3.5.2 rabbitmq mysql redis
+echo installing python 3 and various services...
+call scoop install python rabbitmq mysql redis
 call scoop install rabbitmq
 call scoop install mysql
 call scoop install redis
@@ -15,7 +15,7 @@ call scoop install redis
 mkdir C:\Anthill
 
 echo creating virtualenv...
-call virtualenv -p %userprofile%\scoop\apps\python-exp\3.5.2\python.exe C:\Anthill\venv
+call virtualenv -p %userprofile%\scoop\apps\python-exp\current\python.exe C:\Anthill\venv
 
 call C:\Anthill\venv\Scripts\activate
 
