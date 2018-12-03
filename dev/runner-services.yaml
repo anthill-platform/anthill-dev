@@ -1,0 +1,41 @@
+# Services to start for runner.py
+
+---
+
+services:
+  - name: admin
+    package: anthill.admin.server
+  - name: config
+    package: anthill.config.server
+  - name: discovery
+    package: anthill.discovery.server
+  - name: dlc
+    package: anthill.dlc.server
+  - name: environment
+    package: anthill.environment.server
+  - name: event
+    package: anthill.event.server
+  - name: exec
+    package: anthill.exec.server
+  - name: game-controller
+    package: anthill.game.controller.server
+  - name: game-master
+    package: anthill.game.master.server
+  - name: leaderboard
+    package: anthill.leaderboard.server
+  - name: login
+    package: anthill.login.server
+  - name: message
+    package: anthill.message.server
+  - name: profile
+    package: anthill.profile.server
+  - name: promo
+    package: anthill.promo.server
+  - name: report
+    package: anthill.report.server
+  - name: social
+    package: anthill.social.server
+  - name: static
+    package: anthill.static.server
+  - name: store
+    package: anthill.store.server
