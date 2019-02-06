@@ -42,7 +42,7 @@ class Status(object):
 
 def enqueue_output(out, queue):
     for line in iter(out.readline, b''):
-        queue.put(line)
+        queue.put(line + b"\r")
     out.close()
 
 
@@ -73,7 +73,7 @@ def run(service_settings):
         ]
         service_args.extend(service.get("args", []))
         service_path = os.path.abspath(os.path.join("../", service_name))
-        print("Starting a service at: " + service_path)
+        print("Starting a service at: " + service_path + "\r")
         env = os.environ.copy()
         env["PYTHONPATH"] = os.path.abspath("../common")
         p = Popen(service_args, cwd=service_path, stdout=PIPE, stderr=PIPE, env=env)

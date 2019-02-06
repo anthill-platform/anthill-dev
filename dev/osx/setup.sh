@@ -14,18 +14,16 @@ brew install git
 brew install mysql
 brew install rabbitmq
 brew install redis
-
 brew install libssl
-brew tap sashkab/homebrew-python
+brew install openssl
 brew install https://cdn.anthillplatform.org/brew/python35/python35--3.5.6.high_sierra.bottle.tar.gz
 
+echo "Creating anthill root directory..."
 sudo mkdir /usr/local/anthill
 sudo chown -R $(id -u):$(id -g) /usr/local/anthill
 
-# setup a virtualenv
-sudo easy_install virtualenv
-
-virtualenv -p /usr/local/Cellar/python35/3.5.6/bin/python3.5m /usr/local/anthill/venv
+echo "Installing virtualenv..."
+/usr/local/Cellar/python35/3.5.6/bin/python3.5m -m virtualenv /usr/local/anthill/venv
 
 source /usr/local/anthill/venv/bin/activate
 
@@ -33,13 +31,9 @@ source /usr/local/anthill/venv/bin/activate
 pip install --upgrade pip
 pip install setuptools==40.0
 
-pushd ../../common
-python setup.py sdist
-popd
-
-pushd ../../exec
-python setup.py sdist
-popd
+echo "Installing requirements..."
+pip install -r ../../common/requirements.txt
+pip install -r ../../exec/requirements.txt
 
 # start mysql server
 ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
