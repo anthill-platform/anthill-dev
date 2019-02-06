@@ -1,57 +1,76 @@
 [submodule "message"]
 	path = message
 	url = https://github.com/anthill-platform/anthill-message.git
+	branch = 0.1.dev0
 [submodule "exec"]
 	path = exec
 	url = https://github.com/anthill-platform/anthill-exec.git
+	branch = 0.1.dev0
 [submodule "event"]
 	path = event
 	url = https://github.com/anthill-platform/anthill-event.git
+	branch = 0.1.dev0
 [submodule "leaderboard"]
 	path = leaderboard
 	url = https://github.com/anthill-platform/anthill-leaderboard.git
+	branch = 0.1.dev0
 [submodule "config"]
 	path = config
 	url = https://github.com/anthill-platform/anthill-config.git
+	branch = 0.1.dev0
 [submodule "dlc"]
 	path = dlc
 	url = https://github.com/anthill-platform/anthill-dlc.git
+	branch = 0.1.dev0
 [submodule "store"]
 	path = store
 	url = https://github.com/anthill-platform/anthill-store.git
+	branch = 0.1.dev0
 [submodule "common"]
 	path = common
 	url = https://github.com/anthill-platform/anthill-common.git
+	branch = 0.1.dev0
 [submodule "login"]
 	path = login
 	url = https://github.com/anthill-platform/anthill-login.git
+	branch = 0.1.dev0
 [submodule "promo"]
 	path = promo
 	url = https://github.com/anthill-platform/anthill-promo.git
+	branch = 0.1.dev0
 [submodule "profile"]
 	path = profile
 	url = https://github.com/anthill-platform/anthill-profile.git
+	branch = 0.1.dev0
 [submodule "social"]
 	path = social
 	url = https://github.com/anthill-platform/anthill-social.git
+	branch = 0.1.dev0
 [submodule "discovery"]
 	path = discovery
 	url = https://github.com/anthill-platform/anthill-discovery.git
+	branch = 0.1.dev0
 [submodule "admin"]
 	path = admin
 	url = https://github.com/anthill-platform/anthill-admin.git
+	branch = 0.1.dev0
 [submodule "environment"]
 	path = environment
 	url = https://github.com/anthill-platform/anthill-environment.git
+	branch = 0.1.dev0
 [submodule "static"]
 	path = static
 	url = https://github.com/anthill-platform/anthill-static.git
+	branch = 0.1.dev0
 [submodule "report"]
 	path = report
 	url = https://github.com/anthill-platform/anthill-report.git
+	branch = 0.1.dev0
 [submodule "game-master"]
 	path = game-master
 	url = https://github.com/anthill-platform/anthill-game-master
+	branch = 0.1.dev0
 [submodule "game-controller"]
 	path = game-controller
 	url = https://github.com/anthill-platform/anthill-game-controller
+	branch = 0.1.dev0
