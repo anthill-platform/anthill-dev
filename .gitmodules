@@ -74,3 +74,6 @@
 	path = game-controller
 	url = https://github.com/anthill-platform/anthill-game-controller
 	branch = 0.1.dev0
+[submodule "blog"]
+	path = blog
+	url = https://github.com/anthill-platform/anthill-blog.git

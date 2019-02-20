@@ -1,23 +1,24 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="all" type="CompoundRunConfigurationType" factoryName="Compound Run Configuration">
-    <toRun type="PythonConfigurationType" name="dev_admin" />
-    <toRun type="PythonConfigurationType" name="dev_config" />
-    <toRun type="PythonConfigurationType" name="dev_discovery" />
-    <toRun type="PythonConfigurationType" name="dev_dlc" />
-    <toRun type="PythonConfigurationType" name="dev_enironment" />
-    <toRun type="PythonConfigurationType" name="dev_event" />
-    <toRun type="PythonConfigurationType" name="dev_exec" />
-    <toRun type="PythonConfigurationType" name="dev_game_controller" />
-    <toRun type="PythonConfigurationType" name="dev_game_master" />
-    <toRun type="PythonConfigurationType" name="dev_leaderboard" />
-    <toRun type="PythonConfigurationType" name="dev_login" />
-    <toRun type="PythonConfigurationType" name="dev_message" />
-    <toRun type="PythonConfigurationType" name="dev_profile" />
-    <toRun type="PythonConfigurationType" name="dev_promo" />
-    <toRun type="PythonConfigurationType" name="dev_report" />
-    <toRun type="PythonConfigurationType" name="dev_social" />
-    <toRun type="PythonConfigurationType" name="dev_static" />
-    <toRun type="PythonConfigurationType" name="dev_store" />
+  <configuration default="false" name="all" type="CompoundRunConfigurationType">
+    <toRun name="dev_dlc" type="PythonConfigurationType" />
+    <toRun name="dev_static" type="PythonConfigurationType" />
+    <toRun name="dev_admin" type="PythonConfigurationType" />
+    <toRun name="dev_event" type="PythonConfigurationType" />
+    <toRun name="dev_profile" type="PythonConfigurationType" />
+    <toRun name="dev_game_master" type="PythonConfigurationType" />
+    <toRun name="dev_login" type="PythonConfigurationType" />
+    <toRun name="dev_report" type="PythonConfigurationType" />
+    <toRun name="dev_store" type="PythonConfigurationType" />
+    <toRun name="dev_enironment" type="PythonConfigurationType" />
+    <toRun name="dev_game_controller" type="PythonConfigurationType" />
+    <toRun name="dev_blog" type="PythonConfigurationType" />
+    <toRun name="dev_message" type="PythonConfigurationType" />
+    <toRun name="dev_leaderboard" type="PythonConfigurationType" />
+    <toRun name="dev_config" type="PythonConfigurationType" />
+    <toRun name="dev_discovery" type="PythonConfigurationType" />
+    <toRun name="dev_social" type="PythonConfigurationType" />
+    <toRun name="dev_exec" type="PythonConfigurationType" />
+    <toRun name="dev_promo" type="PythonConfigurationType" />
     <method v="2" />
   </configuration>
 </component>

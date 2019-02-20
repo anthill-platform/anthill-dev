@@ -56,6 +56,7 @@ mysql -h 127.0.0.1 -u root -e "create database dev_social;"
 mysql -h 127.0.0.1 -u root -e "create database dev_store;"
 mysql -h 127.0.0.1 -u root -e "create database dev_static;"
 mysql -h 127.0.0.1 -u root -e "create database dev_report;"
+mysql -h 127.0.0.1 -u root -e "create database dev_blog;"
 
 # generate private key pair
 mkdir ../../.anthill-keys
