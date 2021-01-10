@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="2ebc0749-5910-4c49-a3d3-a136c338894e" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="713530f3-b5b7-4a60-bf4b-d091af34615a" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="43b41b1e-c7cb-42ad-b7a8-4b717ca40ecc" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="d6831787-6a04-41a8-b916-d0f13bd1b3be" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="a864baa4-1727-40ec-848f-b02504801d82" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="0c60d6d0-c50b-4d9e-bb21-7160f2c7dad0" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="e8607fd5-3370-4e7a-8e39-d99122205c26" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="d88c0c8b-58ec-4e5e-96fe-065149162ead" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="5c15db68-57d9-46ac-aaa3-cf2d458a380c" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="4d1f090c-4be5-4371-b574-eec065a0a581" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="e6097ad1-0d00-42b0-9b70-5750683cdb87" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="cc4809ac-e871-4345-8ce6-83e74c01d379" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="edb5ced3-b328-488f-9e6e-5ee848efcaa7" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="b826e0aa-9a72-495d-8bfe-6827016bfe1c" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="08eb4df2-6cbf-461a-9c21-0fa7b3ab6650" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="9afb1d65-40bb-41e1-bffe-614007675505" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="1a5cdf78-d084-478a-b4ab-c61e5ad8556e" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="f563962e-4836-4631-a20d-4d2a53fbbbe1" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="c7b0a2f7-8a1a-4323-aeeb-8030218446fe" port="22" customName="vm" nameFormat="CUSTOM" />
+      <sshConfig authType="PASSWORD" host="vm.anthillplatform.org" id="42bbf34b-c0d0-454d-aece-2d5e55d88db2" port="22" customName="vm" nameFormat="CUSTOM" />
+    </configs>
+  </component>
+</project>

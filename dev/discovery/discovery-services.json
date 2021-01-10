@@ -1,0 +1,94 @@
+{
+    "services": {
+        "admin": {
+            "internal": "http://anthill_admin:9500",
+            "external": "http://localhost:9500",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "login": {
+            "internal": "http://anthill_login:9501",
+            "external": "http://localhost:9501",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "discovery": {
+            "internal": "http://anthill_discovery:9502",
+            "external": "http://localhost:9502",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "environment": {
+            "internal": "http://anthill_environment:9503",
+            "external": "http://localhost:9503",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "config": {
+            "internal": "http://anthill_config:9504",
+            "external": "http://localhost:9504",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "dlc": {
+            "internal": "http://anthill_dlc:9505",
+            "external": "http://localhost:9505",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "event": {
+            "internal": "http://anthill_event:9506",
+            "external": "http://localhost:9506",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "exec": {
+            "internal": "http://anthill_exec:9507",
+            "external": "http://localhost:9507",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "game": {
+            "internal": "http://anthill_game:9508",
+            "external": "http://localhost:9508",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "leaderboard": {
+            "internal": "http://anthill_leaderboard:9510",
+            "external": "http://localhost:9510",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "message": {
+            "internal": "http://anthill_message:9511",
+            "external": "http://localhost:9511",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "profile": {
+            "internal": "http://anthill_profile:9512",
+            "external": "http://localhost:9512",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "promo": {
+            "internal": "http://anthill_promo:9513",
+            "external": "http://localhost:9513",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "social": {
+            "internal": "http://anthill_social:9514",
+            "external": "http://localhost:9514",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "static": {
+            "internal": "http://anthill_static:9515",
+            "external": "http://localhost:9515",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "store": {
+            "internal": "http://anthill_store:9516",
+            "external": "http://localhost:9516",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "report": {
+            "internal": "http://anthill_report:9517",
+            "external": "http://localhost:9517",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        },
+        "blog": {
+            "internal": "http://anthill_blog:9518",
+            "external": "http://localhost:9518",
+            "broker": "amqp://guest:guest@rabbitmq:5672/"
+        }
+    }
+}

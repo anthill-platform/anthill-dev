@@ -1,0 +1,646 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: "rabbitmq:3.8"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+    restart: always
+  mysql:
+    build: ./mysql
+    container_name: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+    - ./data/mysql:/var/lib/mysql:rw
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: Root123
+  redis:
+    image: redis:6-alpine
+    volumes:
+      - ./data/redis:/data:rw
+    restart: always
+  influxdb:
+    image: influxdb:1.8-alpine
+    ports:
+      - "8086:8086"
+      - "25826:25826/udp"
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb
+      - ./influxdb/types.db:/usr/share/collectd/types.db:ro
+    environment:
+      INFLUXDB_DB: dev
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: Admin123
+      INFLUXDB_USER: monitoring
+      INFLUXDB_USER_PASSWORD: Monitoring123
+      INFLUXDB_COLLECTD_ENABLED: "true"
+      INFLUXDB_COLLECTD_BIND_ADDRESS: ":25826"
+      INFLUXDB_COLLECTD_DATABASE: dev
+      INFLUXDB_COLLECTD_SECURITY_LEVEL: none
+      INFLUXDB_REPORTING_DISABLED: "true"
+  collectd:
+    build: ./collectd
+    volumes:
+      - /:/rootfs:ro
+  grafana:
+    image: grafana/grafana:latest-ubuntu
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./grafana:/etc/grafana/provisioning
+    environment:
+      GF_DATABASE_TYPE: mysql
+      GF_DATABASE_NAME: dev_grafana
+      GF_DATABASE_HOST: mysql:3306
+      GF_DATABASE_USER: grafana
+      GF_DATABASE_PASSWORD: Grafana123
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: Admin123
+  anthill_keygen:
+    build: ./keys
+    volumes:
+    - ./keys:/keys
+    environment:
+      ANTHILL_PEM_PASSPHRASE: wYrA9O187G71ILmZr67GZG945SgarS4K
+  anthill_common:
+    build: ../common
+    image: anthillplatform/anthill-common:latest
+    container_name: anthill_common
+    depends_on:
+      - anthill_keygen
+  anthill_environment:
+    build: ../environment
+    image: anthillplatform/anthill-environment:latest
+    container_name: anthill_environment
+    ports:
+    - "9503:9503"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      auth_key_public: /keys/anthill.pub
+      token_cache_host: redis
+      db_host: mysql
+      db_name: dev_environment
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_discovery:
+    build: ../discovery
+    image: anthillplatform/anthill-discovery:latest
+    container_name: anthill_discovery
+    ports:
+    - "9502:9502"
+    volumes:
+      - ./keys/public:/keys
+      - ./discovery:/discovery
+    restart: always
+    environment:
+      auth_key_public: /keys/anthill.pub
+      discover_services_host: redis
+      token_cache_host: redis
+      services_init_file: /discovery/discovery-services.json
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_login:
+    build: ../login
+    image: anthillplatform/anthill-login:latest
+    container_name: anthill_login
+    ports:
+    - "9501:9501"
+    volumes:
+      - ./keys:/keys
+    restart: always
+    environment:
+      tokens_host: redis
+      cache_host: redis
+      token_cache_host: redis
+      application_keys_secret: 7Pr0MtA8hHTmFeR6SOk87NSBvRM4QoCp
+      auth_key_public: /keys/public/anthill.pub
+      auth_key_private: /keys/private/anthill.pem
+      private_key_password: wYrA9O187G71ILmZr67GZG945SgarS4K
+      passwords_salt: t6YJbMTvMRnYyPW7WfZC2tGXUsJwy252pU0OiCM5
+      db_host: mysql
+      db_name: dev_login
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_admin:
+    build: ../admin
+    image: anthillplatform/anthill-admin:latest
+    container_name: anthill_admin
+    ports:
+    - "9500:9500"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_admin
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_blog:
+    build: ../blog
+    image: anthillplatform/anthill-blog:latest
+    container_name: anthill_blog
+    ports:
+    - "9518:9518"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_blog
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      schedule_update: 300
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_config:
+    build: ../config
+    image: anthillplatform/anthill-config:latest
+    container_name: anthill_config
+    ports:
+    - "9504:9504"
+    volumes:
+      - ./keys/public:/keys
+      - ./data/config:/config
+    tmpfs:
+      - /var/runtime
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_config
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      data_runtime_location: /var/runtime
+      data_host_location: "http://localhost:9504/download/"
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_dlc:
+    build: ../dlc
+    image: anthillplatform/anthill-dlc:latest
+    container_name: anthill_dlc
+    ports:
+    - "9505:9505"
+    volumes:
+      - ./keys/public:/keys
+      - ./data/dlc:/dlc
+    tmpfs:
+      - /var/runtime
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_dlc
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      data_location: /dlc
+      data_runtime_location: /var/runtime
+      data_host_location: "http://localhost:9505/download/"
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_event:
+    build: ../event
+    image: anthillplatform/anthill-event:latest
+    container_name: anthill_event
+    ports:
+    - "9506:9506"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_event
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      schedule_update: 300
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_exec:
+    build: ../exec
+    image: anthillplatform/anthill-exec:latest
+    container_name: anthill_exec
+    ports:
+    - "9507:9507"
+    volumes:
+      - ./keys/public:/keys
+      - ./data/exec:/exec
+    tmpfs:
+      - /var/runtime
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_exec
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      js_source_path: "/exec"
+      js_call_timeout: 10
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_game:
+    build: ../game-master
+    image: anthillplatform/anthill-game-master:latest
+    container_name: anthill_game_master
+    ports:
+    - "9508:9508"
+    volumes:
+      - ./keys/public:/keys
+      - ./data/game-master:/deployments
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      rate_cache_host: redis
+      rate_create_room: "5,60"
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_game
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      party_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      deployments_location: /deployments
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_game_controller:
+    build: ../game-controller
+    image: anthillplatform/anthill-game-controller:latest
+    container_name: anthill_game_controller
+    volumes:
+      - ./keys/public:/keys
+      - ./data/game-controller/binaries:/controller
+      - ./data/game-controller/logs:/var/log
+    tmpfs:
+      - /tmp
+    restart: always
+    network_mode: host
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      gs_host: "localhost"
+      region: "local"
+      connection_username: "root"
+      connection_password: "anthill"
+      connection_gamespace: "root"
+      sock_path: /tmp
+      discovery_service: http://localhost:9502
+      binaries_path: /controller
+      logs_path: /var/log
+      logs_keep_time: 86400
+      logs_max_file_size: 2000000
+      ports_pool_from: 38000
+      ports_pool_to: 40000
+      dist_usage_path: /
+    depends_on:
+      - anthill_common
+  anthill_leaderboard:
+    build: ../leaderboard
+    image: anthillplatform/anthill-leaderboard:latest
+    container_name: anthill_leaderboard
+    ports:
+    - "9510:9510"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_leaderboard
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      default_limit: 50
+      cluster_size: 50
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_message:
+    build: ../message
+    image: anthillplatform/anthill-message:latest
+    container_name: anthill_message
+    ports:
+    - "9511:9511"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_message
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      message_broker: amqp://guest:guest@rabbitmq:5672/
+      group_cluster_size: 1000
+      message_prefetch_count: 32
+      outgoing_message_workers: 32
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_profile:
+    build: ../profile
+    image: anthillplatform/anthill-profile:latest
+    container_name: anthill_profile
+    ports:
+    - "9512:9512"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_profile
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_promo:
+    build: ../promo
+    image: anthillplatform/anthill-promo:latest
+    container_name: anthill_promo
+    ports:
+    - "9513:9513"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_promo
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_report:
+    build: ../report
+    image: anthillplatform/anthill-report:latest
+    container_name: anthill_report
+    ports:
+    - "9517:9517"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      rate_cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_report
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      max_report_size: 1048576
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_social:
+    build: ../social
+    image: anthillplatform/anthill-social:latest
+    container_name: anthill_social
+    ports:
+    - "9514:9514"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_social
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_static:
+    build: ../static
+    image: anthillplatform/anthill-static:latest
+    container_name: anthill_static
+    ports:
+    - "9515:9515"
+    volumes:
+      - ./keys/public:/keys
+      - ./data/static:/static
+    restart: always
+    environment:
+      rate_cache_host: redis
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_static
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      max_file_size: 104857600
+      data_runtime_location: /static
+      data_host_location: http://localhost:9515/download
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common
+  anthill_store:
+    build: ../store
+    image: anthillplatform/anthill-store:latest
+    container_name: anthill_store
+    ports:
+    - "9516:9516"
+    volumes:
+      - ./keys/public:/keys
+    restart: always
+    environment:
+      cache_host: redis
+      token_cache_host: redis
+      auth_key_public: /keys/anthill.pub
+      db_host: mysql
+      db_name: dev_store
+      db_username: anthill
+      db_password: Admin123
+      internal_broker: amqp://guest:guest@rabbitmq:5672/
+      internal_restrict: "172.0.0.1/8"
+      pubsub: amqp://guest:guest@rabbitmq:5672/
+      discovery_service: http://anthill_discovery:9502
+      enable_monitoring: "true"
+      monitoring_host: influxdb
+      monitoring_db: dev
+      monitoring_username: monitoring
+      monitoring_password: Monitoring123
+    depends_on:
+      - anthill_common

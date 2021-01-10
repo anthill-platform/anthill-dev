@@ -3,3 +3,6 @@
 /.idea/dataSources
 /.idea/httpRequests
 /venv/
+/dev/data
+/dev/keys/private
+/dev/keys/public
